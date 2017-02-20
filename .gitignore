@@ -1,0 +1,6 @@
+CMakeLists.txt
+proj.android
+proj.android-studio
+proj.linux
+proj.win8.1-universal
+proj.win10
