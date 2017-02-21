@@ -28,6 +28,8 @@ private:
     GLuint vao;
     GLuint vertexVBO;
     GLuint indexBuffer;
+    GLuint vertexBuffer;
+    GLuint colorBuffer;
     GLuint positionLocation;
     GLuint colorLocation;
     float _scale = 1;
