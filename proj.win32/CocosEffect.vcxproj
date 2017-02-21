@@ -171,8 +171,12 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ResourceCompile Include="game.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Resources\shaders\fraction.fsh" />
+    <None Include="..\Resources\shaders\fraction.vsh" />
     <None Include="..\Resources\shaders\glCube.fsh" />
     <None Include="..\Resources\shaders\glCube.vsh" />
+    <None Include="..\Resources\shaders\gray.fsh" />
+    <None Include="..\Resources\shaders\gray.vsh" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

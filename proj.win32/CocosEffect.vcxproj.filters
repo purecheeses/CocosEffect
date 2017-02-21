@@ -54,5 +54,17 @@
     <None Include="..\Resources\shaders\glCube.vsh">
       <Filter>resource\shaders</Filter>
     </None>
+    <None Include="..\Resources\shaders\fraction.fsh">
+      <Filter>resource\shaders</Filter>
+    </None>
+    <None Include="..\Resources\shaders\fraction.vsh">
+      <Filter>resource\shaders</Filter>
+    </None>
+    <None Include="..\Resources\shaders\gray.fsh">
+      <Filter>resource\shaders</Filter>
+    </None>
+    <None Include="..\Resources\shaders\gray.vsh">
+      <Filter>resource\shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
