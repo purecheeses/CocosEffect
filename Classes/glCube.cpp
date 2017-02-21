@@ -1,11 +1,3 @@
-//
-//  glCube.cpp
-//  CocosEffect
-//
-//  Created by happyelements on 2017/2/20.
-//
-//
-
 #include "glCube.h"
 Vertex data[] =
 {
