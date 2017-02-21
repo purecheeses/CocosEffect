@@ -161,13 +161,18 @@ void glCube::initWithDefault(){
     glGenBuffers(1, &indexBuffer);
     glGenBuffers(1, &vertexBuffer);
     glGenBuffers(1, &colorBuffer);
+    for (int i = 0; i< sizeof(data)/sizeof(data[0]); i++) {
+        for (int j = 0; j<3; j++) {
+            data[i].Position[j] = data[i].Position[j]*50;
+        }
+    }
 }
 void glCube::onDraw(const Mat4& transform, uint32_t flags){
 
     Director::getInstance()->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     Director::getInstance()->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    Director::getInstance()->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    Director::getInstance()->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+//    Director::getInstance()->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+//    Director::getInstance()->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     
     Mat4 modelViewMatrix;
     Mat4::createLookAt(Vec3(4,3,3), Vec3(0,0,0), Vec3(0,-1,0), &modelViewMatrix);
@@ -179,8 +184,9 @@ void glCube::onDraw(const Mat4& transform, uint32_t flags){
     Mat4 projectionMatrix;
    Mat4::createPerspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f, &projectionMatrix);
     //Mat4::createOrthographic(10,10,1,100,&projectionMatrix);
-    Director::getInstance()->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, projectionMatrix);
-    Director::getInstance()->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, modelViewMatrix);
+    Director::getInstance()->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
+//    Director::getInstance()->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, projectionMatrix);
+//    Director::getInstance()->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, modelViewMatrix);
     auto glProgram = getGLProgram();
     glProgram->use();
     glProgram->setUniformsForBuiltins();
@@ -270,7 +276,7 @@ void glCube::onDraw(const Mat4& transform, uint32_t flags){
 ////
 ////    int vertexCount = sizeof(data) / sizeof(data[0]);
 ////    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,vertexCount);
-    Director::getInstance()->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+//    Director::getInstance()->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     Director::getInstance()->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
 }
