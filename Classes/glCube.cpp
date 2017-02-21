@@ -89,25 +89,43 @@ void glCube::initWithDefault(){
     glGenVertexArrays(1, &vao);
     glGenBuffers(1,&vertexVBO);
     glGenBuffers(1, &indexBuffer);
-    auto visiableSize = Director::getInstance()->getVisibleSize();
-    for (int i = 0; i < sizeof(data)/sizeof(data[0]); i++) {
-        auto p = data[i].Position;
-        for (int j = 0; j<3; j++) {
-            p[j] = p[j] * visiableSize.width/2;
-        }
-    }
+  //  setCamera();
+//    auto visiableSize = Director::getInstance()->getVisibleSize();
+//    for (int i = 0; i < sizeof(data)/sizeof(data[0]); i++) {
+//        auto p = data[i].Position;
+//        for (int j = 0; j<3; j++) {
+//            p[j] = p[j] * visiableSize.width/2;
+//        }
+//    }
 }
 void glCube::onDraw(const Mat4& transform, uint32_t flags){
+
+    Director::getInstance()->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    Director::getInstance()->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    Director::getInstance()->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    Director::getInstance()->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    
+    Mat4 modelViewMatrix;
+    Mat4::createLookAt(Vec3(4,3,3), Vec3(0,0,0), Vec3(0,-1,0), &modelViewMatrix);
+//    modelViewMatrix.translate(0, 0,0 );
+//    
+    static float rotation = 20;
+    modelViewMatrix.rotate(Vec3(0,1,0),CC_DEGREES_TO_RADIANS(rotation));
+//    
+    Mat4 projectionMatrix;
+   Mat4::createPerspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f, &projectionMatrix);
+    //Mat4::createOrthographic(10,10,1,100,&projectionMatrix);
+    Director::getInstance()->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, projectionMatrix);
+    Director::getInstance()->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, modelViewMatrix);
     auto glProgram = getGLProgram();
     glProgram->use();
     glProgram->setUniformsForBuiltins();
-    
 //    //draw triangle
 //    auto visiableSize = Director::getInstance()->getVisibleSize();
 //    // 指定将要绘制的三角形的三个顶点
 //    float vertercies[] = { 0,0,     //第一个点的坐标
-//        visiableSize.width,0,   //第二个点的坐标
-//        visiableSize.width / 2, visiableSize.height};   //第三个点的坐标
+//        1,0,   //第二个点的坐标
+//        0, 1};   //第三个点的坐标
 //    // 指定每一个顶点的颜色，颜色值是RGBA格式的，取值范围是0-1
 //    float color[] = { 0, 1,0, 1,    //第一个点的颜色，绿色
 //        1,0,0, 1,  //第二个点的颜色, 红色
@@ -143,14 +161,45 @@ void glCube::onDraw(const Mat4& transform, uint32_t flags){
 //    //使用VAO
     glBindVertexArray(vao);
     //渲染
-    glDrawElements(GL_TRIANGLES,  36, GL_UNSIGNED_BYTE,0);
     int vertexSize = sizeof(data)/sizeof(data[0]);
-     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,vertexSize);
+    //glDrawElements(GL_TRIANGLE_STRIP,  36, GL_UNSIGNED_BYTE,0);
+
+    glEnable(GL_DEPTH_TEST);
+    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_BLEND);
+    glDrawElements(GL_TRIANGLES,  36, GL_UNSIGNED_BYTE, 0);
+    glDisableVertexAttribArray(positionLocation);
+    glDisableVertexAttribArray(colorLocation);
+//    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,vertexSize);
+    CHECK_GL_ERROR_DEBUG();
+    glDisable(GL_DEPTH_TEST);
     //清空VAO
     glBindVertexArray(0);
-//
-//    int vertexCount = sizeof(data) / sizeof(data[0]);
-//    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,vertexCount);
+
+////
+////    int vertexCount = sizeof(data) / sizeof(data[0]);
+////    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,vertexCount);
+    Director::getInstance()->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    Director::getInstance()->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+
+}
+
+void glCube::setCamera(){
+    Mat4 projectionMatrix;
+    Mat4::createPerspective(60, 480/320, 1.0, 42, &projectionMatrix);
+    Director::getInstance()->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, projectionMatrix);
+    
+    Mat4 modelViewMatrix;
+    Mat4::createLookAt(Vec3(0,0,1), Vec3(0,0,0), Vec3(0,1,0), &modelViewMatrix);
+    modelViewMatrix.translate(0, 0, -5);
+    
+    static float rotation = 0;
+    modelViewMatrix.rotate(Vec3(1,1,1),CC_DEGREES_TO_RADIANS(rotation));
+    rotation++;
+    if (rotation < 360) {
+        rotation = 0;
+    }
+    Director::getInstance()->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, modelViewMatrix);
 }
 
 void glCube::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) {

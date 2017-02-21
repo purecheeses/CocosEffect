@@ -20,6 +20,7 @@ public:
     void initWithDefault();
     virtual void draw(Renderer *renderer, const Mat4& transform, uint32_t flags) override;
     void onDraw(const Mat4& transform, uint32_t flags);
+    void setCamera();
     //        virtual void update(float dt);
 protected:
     CustomCommand m_customCommand;
@@ -29,6 +30,7 @@ private:
     GLuint indexBuffer;
     GLuint positionLocation;
     GLuint colorLocation;
+    float _scale = 1;
     
 };
 
