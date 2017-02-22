@@ -20,14 +20,16 @@ bool HelloWorld::init()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    auto sprite = glCube::create(); //Sprite::create("HelloWorld.png");
+//    auto sprite = glCube::create(); //Sprite::create("HelloWorld.png");
+//    sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+//    sprite->runAction(RotateBy::create(1.5,90));
+//    this->addChild(sprite, 0);
+    
+    auto sprite = Sprite::create("HelloWorld.png");
+    this->addChild(sprite);
     sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
-    sprite->runAction(RotateBy::create(1.5,90));
-    //sprite->setPosition(Vec2(0,0));
-    // add the sprite as a child to this layer
-    this->addChild(sprite, 0);
+    sprite->setGLProgram(GLProgram::createWithFilenames("shaders/fraction.vsh","shaders/fraction.fsh"));
     
     return true;
 }
-
 
