@@ -66,5 +66,23 @@
     <None Include="..\Resources\shaders\gray.vsh">
       <Filter>resource\shaders</Filter>
     </None>
+    <None Include="..\Resources\shaders\blur.fsh">
+      <Filter>resource\shaders</Filter>
+    </None>
+    <None Include="..\Resources\shaders\blur.vsh">
+      <Filter>resource\shaders</Filter>
+    </None>
+    <None Include="..\Resources\shaders\streamer.fsh">
+      <Filter>resource\shaders</Filter>
+    </None>
+    <None Include="..\Resources\shaders\streamer.vsh">
+      <Filter>resource\shaders</Filter>
+    </None>
+    <None Include="..\Resources\shaders\bloom.fsh">
+      <Filter>resource\shaders</Filter>
+    </None>
+    <None Include="..\Resources\shaders\bloom.vsh">
+      <Filter>resource\shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

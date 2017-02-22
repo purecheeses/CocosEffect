@@ -2,7 +2,7 @@ varying vec4 v_fragmentColor;
 varying vec2 v_texCoord;
 
 float p_offset[9];
-float p_weight[9];
+float p_weight[9];					//glsl数组不支持声明时初始化。
 const float pixel_size = 1.0/100.0;     //glsl没法的到像素距离，因为他不care，只关心归一化后结果，所以应该外部传入texture的size，这里我偷懒直接写个数了
 
 //p_offset = float p_weight[9];
