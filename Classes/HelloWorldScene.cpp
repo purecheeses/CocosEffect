@@ -28,8 +28,9 @@ bool HelloWorld::init()
     auto sprite = Sprite::create("HelloWorld.png");
     this->addChild(sprite);
     sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
-    sprite->setGLProgram(GLProgram::createWithFilenames("shaders/fraction.vsh","shaders/fraction.fsh"));
-    
+    sprite->setScale(3,3);
+//    sprite->setGLProgram(GLProgram::createWithFilenames("shaders/fraction.vsh","shaders/fraction.fsh"));
+    sprite->setGLProgram(GLProgram::createWithFilenames("shaders/streamer.vsh","shaders/streamer.fsh"));
     return true;
 }
 
